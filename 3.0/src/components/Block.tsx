@@ -1,17 +1,19 @@
-import { CSSProperties, useState } from 'react';
-import classBlock from './class/Block';
+import { CSSProperties, useRef, useState, memo } from 'react';
+import classBlock from '../class/Block';
 
 
-export default function Block(props: { intX: number; intY: number; }) {
+let Block = (props: { intX: number, intY: number, strColor: string }) => {
     const [intSquareSizeByPx, setSquareSizeByPx] = useState(classBlock.getSquareSizeByPx());
-    // const [strBlockColor, setBlockColor] = useState(classBlock.getSquareSizeByPx());
 
-    function updateSquareBlockSize(){
+    const isFirstRender = useRef(true);
+    let updateSquareBlockSize = () => {
         classBlock.setSquareBlockSize( document.getElementById("mainContainer") as HTMLInputElement );
         setSquareSizeByPx(classBlock.getSquareSizeByPx());
     }
-    window.addEventListener("load", () => updateSquareBlockSize())
-    window.addEventListener("resize", () => updateSquareBlockSize());
+    if (isFirstRender.current){
+        window.addEventListener("load", () => updateSquareBlockSize());
+        window.addEventListener("resize", () => updateSquareBlockSize());
+    }
 
 
     let cssOuterBlock: CSSProperties = {
@@ -29,13 +31,14 @@ export default function Block(props: { intX: number; intY: number; }) {
         left: '10%',
         top: '10%',
 
-        backgroundColor: classBlock.strBackgroundColor,
+        backgroundColor: props.strColor,
     }
 
-
+    isFirstRender.current = false;
     return (
         <div style={cssOuterBlock}>
             <div style={cssInnerBlock}></div>
         </div>
     );
 }
+export default memo(Block);

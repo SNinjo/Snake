@@ -1,16 +1,89 @@
-import Map from './class/Map';
+import { useEffect, useState, useRef, memo, CSSProperties  } from 'react';
+
+import SnakeGame from '../class/SnakeGame';
+import Map from '../class/Map';
+import Position from '../class/dataStructure/Position';
+
 import RowBlock from './RowBlock';
+import Menu from './Menu';
 
 
-export default function MainScreen() {
-    let arr2TagBlock = [];
-    for (let intRowNumber = 0; intRowNumber < Map.getHeight(); intRowNumber++){
-        arr2TagBlock.push(<RowBlock key={intRowNumber} intY={intRowNumber}></RowBlock>);
+let MainScreen = () => {
+    const isFirstRender = useRef(true);
+
+    // 聚焦在 MainScreen 的 div 上
+    const focusDiv = useRef() as React.MutableRefObject<HTMLInputElement>;
+    let focusOnMainScreen = () => {
+        if(focusDiv.current) focusDiv.current.focus();
+    }
+    useEffect(() => focusOnMainScreen(), [focusDiv]);
+    
+    const [arr2Color, setColor] = useState(Map.getColors());
+    const [strGameState, setGameState] = useState("ready"); // ready | play | pause | over | pass
+    let changeGameState = (strNewGameState: string) => setGameState(strNewGameState);
+
+
+    if (isFirstRender.current) {
+        SnakeGame.changeToOverState = () => setGameState("over");
+        SnakeGame.changeToPassState = () => setGameState("pass");
+        Map.updateMainScreen = () => setColor(Map.getColors());
+
+        SnakeGame.addPlayerByDefault(new Position(0, 0), "right", "red");
+        SnakeGame.addPlayerByDefault(new Position((Map.getWidth() - 1), 0), "down", "blue");
+
+        SnakeGame.initialize();
     }
 
+
+    let triggerFunctionKeys = (event: any) => {
+        switch (event.key){
+            case "Escape":
+                setGameState("ready");
+                SnakeGame.exit();
+                break;
+
+            case " ":
+            case "p":
+                if (strGameState === "play"){
+                    setGameState("pause");
+                    SnakeGame.pause();
+                }
+                else if (strGameState === "pause") {
+                    setGameState("play");
+                    SnakeGame.start();
+                }
+                break;
+
+            case "r":
+                setGameState("play");
+                SnakeGame.restart();
+                break;
+        }
+    }
+
+    let pauseGame = () => {
+        if (strGameState === "play") {
+            setGameState("pause");
+            SnakeGame.pause();
+        }
+    }
+
+    
+    let arr2TagBlock = [];
+    for (let intRowNumber = 0; intRowNumber < Map.getHeight(); intRowNumber++){
+        arr2TagBlock.push(<RowBlock key={intRowNumber} intY={intRowNumber} rowColor={arr2Color[intRowNumber]}></RowBlock>);
+    }
+
+    let css: CSSProperties = {
+        position: "relative",
+        outline: "none",
+    }
+    isFirstRender.current = false;
     return (
-        <div id="mainScreen">
+        <div style={css} onClick={pauseGame} onKeyDown={triggerFunctionKeys} tabIndex={0} ref={focusDiv}>
+            <Menu gameState={strGameState} setGameState={changeGameState} focusOnMainScreen={focusOnMainScreen} />
             {arr2TagBlock}
         </div>
     );
 }
+export default memo(MainScreen);
