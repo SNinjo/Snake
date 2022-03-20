@@ -12,14 +12,14 @@ let MainScreen = () => {
 
     // 聚焦在 MainScreen 的 div 上
     const focusDiv = useRef() as React.MutableRefObject<HTMLInputElement>;
-    let focusOnMainScreen = () => {
+    let focusOnMainScreen: Function = () => {
         if(focusDiv.current) focusDiv.current.focus();
     }
     useEffect(() => focusOnMainScreen(), [focusDiv]);
     
     const [arr2Color, setColor] = useState(Maps.getColors());
     const [strGameState, setGameState] = useState("ready"); // ready | play | pause | over | pass
-    let changeGameState = (strNewGameState: string) => setGameState(strNewGameState);
+    let changeGameState: Function = (strNewGameState: string) => setGameState(strNewGameState);
 
 
     if (isFirstRender.current) {
@@ -34,7 +34,7 @@ let MainScreen = () => {
     }
 
 
-    let triggerFunctionKeys = (event: any) => {
+    let triggerFunctionKeys: React.KeyboardEventHandler<HTMLDivElement> = (event: any) => {
         switch (event.key){
             case "Escape":
                 setGameState("ready");
@@ -60,7 +60,7 @@ let MainScreen = () => {
         }
     }
 
-    let pauseGame = () => {
+    let pauseGame: React.MouseEventHandler<HTMLDivElement> = () => {
         if (strGameState === "play") {
             setGameState("pause");
             SnakeGame.pause();
@@ -68,7 +68,7 @@ let MainScreen = () => {
     }
 
     
-    let arr2TagBlock = [];
+    let arr2TagBlock: Array<JSX.Element> = [];
     for (let intRowNumber = 0; intRowNumber < Maps.getHeight(); intRowNumber++){
         arr2TagBlock.push(<RowBlock key={intRowNumber} intY={intRowNumber} rowColor={arr2Color[intRowNumber]}></RowBlock>);
     }

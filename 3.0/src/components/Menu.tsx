@@ -14,7 +14,7 @@ let Menu = (props: {gameState: string, setGameState: Function, focusOnMainScreen
 
         zIndex: "1",
     }
-    let cssContainer = {
+    let cssContainer: CSSProperties = {
         margin: "10px auto",
         width: "150px"
     }
@@ -30,7 +30,7 @@ let Menu = (props: {gameState: string, setGameState: Function, focusOnMainScreen
     }
     
 
-    let arrButtonShowInReady = [
+    let arrButtonShowInReady: Array<JSX.Element> = [
         <input key="btnStart" style={cssButton} type="button" value="Start" onClick={
             (event) => {
                 event.stopPropagation();
@@ -42,7 +42,7 @@ let Menu = (props: {gameState: string, setGameState: Function, focusOnMainScreen
             }
         }></input>
     ];
-    let arrButtonShowInPause = [
+    let arrButtonShowInPause: Array<JSX.Element> = [
         <input key="btnBackToGame" style={cssButton} type="button" value="Back to game" onClick={
             (event) => {
                 event.stopPropagation();
@@ -74,7 +74,7 @@ let Menu = (props: {gameState: string, setGameState: Function, focusOnMainScreen
             }
         }></input>
     ];
-    let arrTagsShowInOver = [
+    let arrTagsShowInOver: Array<JSX.Element> = [
         <h2 key="textOver" style={cssText}> Game Over </h2>,
         <input key="btnExitInOver" style={cssButton} type="button" value="Exit" onClick={
             (event) => {
@@ -87,7 +87,7 @@ let Menu = (props: {gameState: string, setGameState: Function, focusOnMainScreen
             }
         }></input>
     ]
-    let arrTagsShowInPass = [
+    let arrTagsShowInPass: Array<JSX.Element> = [
         <h2 key="textPass" style={cssText}> Clear !! </h2>,
         <input key="btnExitInPass" style={cssButton} type="button" value="Exit" onClick={
             (event) => {
@@ -100,7 +100,7 @@ let Menu = (props: {gameState: string, setGameState: Function, focusOnMainScreen
             }
         }></input>
     ]
-    let menu = (
+    let menu: JSX.Element = (
         <div style={css}>
             <div style={cssContainer}>
                 {(props.gameState === "ready") ? arrButtonShowInReady : <></>}
