@@ -1,28 +1,44 @@
-import Timer from "./Timer";
 import Candy from "./Candy";
 import Snake from "./Snake";
-import classMap from "./Map";
-import User from "./User";
-import OperationKeys from "./dataStructure/OperationKeys";
-import Position from "./dataStructure/Position";
-import LogicalError from "./LogicalError";
+import { Maps, Position } from './Maps';
+import { User, OperationKeys } from "./User";
 import BlockObject from "./interface/BlockObject";
 
+
+class Timer {
+    private intFrameSpeedEachSecond: number = 0.5;
+    private timeoutId: NodeJS.Timer | null = null;
+
+    constructor(){}
+
+    public start(): void {
+        this.timeoutId = setInterval(SnakeGame.executeEachFrame, (this.intFrameSpeedEachSecond * 1000));
+    }
+    public pause(): void {
+        if (this.timeoutId !== null) clearInterval(this.timeoutId);
+        this.timeoutId = null;
+    }
+
+    public isExecuting(): boolean {
+        return this.timeoutId !== null;
+    }
+}
 
 export default class SnakeGame{
     public static changeToOverState: Function;
     public static changeToPassState: Function;
 
+    private static intIdCounter: number = 0;
     private static mapCandys: Map<number, Candy> = new Map();
     private static mapSnakes: Map<number, Snake> = new Map();
     private static mapAliveSnakes: Map<number, Snake>;
     private static mapUser: Map<number, User> = new Map();
-    private static intIdCounter: number = 0;
+    private static timer: Timer = new Timer();
 
 
     public static executeEachFrame(): void {
         if (SnakeGame.mapAliveSnakes.size === 0) SnakeGame.over();
-        if (classMap.isFilled()) SnakeGame.pass();
+        if (Maps.isFilled()) SnakeGame.pass();
         if (SnakeGame.mapCandys.size === 0) SnakeGame.generateCandy();
 
 
@@ -40,7 +56,7 @@ export default class SnakeGame{
 
         SnakeGame.collideObject(arrSnakes);
 
-        classMap.updateMainScreen();
+        Maps.updateMainScreen();
     }
 
     public static initialize(): void {
@@ -48,43 +64,43 @@ export default class SnakeGame{
         SnakeGame.mapAliveSnakes.forEach(snake => snake.initialize());
         SnakeGame.mapCandys.forEach(candy => SnakeGame.clearCandy(candy));
 
-        classMap.clearMap();
+        Maps.clearMaps();
         this.mapAliveSnakes.forEach(snake => {
             let positionGenerative = snake.getPositionGenerative();
 
-            classMap.getBlock(positionGenerative.intX, positionGenerative.intY).setBlockObject(snake);
+            Maps.getBlock(positionGenerative.intX, positionGenerative.intY).setBlockObject(snake);
         })
 
         SnakeGame.generateCandy();
 
-        classMap.updateMainScreen();
+        Maps.updateMainScreen();
     }
 
     public static start(): void {
-        Timer.start();
+        this.timer.start();
     }
     public static pause(): void {
-        Timer.pause();
+        this.timer.pause();
     }
     public static restart(): void {
-        Timer.pause();
+        this.timer.pause();
         SnakeGame.initialize();
-        Timer.start();
+        this.timer.start();
     }
     public static exit(): void {
         SnakeGame.initialize();
-        Timer.pause();
+        this.timer.pause();
     }
     private static over(): void {
-        Timer.pause();
+        this.timer.pause();
         SnakeGame.changeToOverState();
     }
     static pass(): void {
-        Timer.pause();
+        this.timer.pause();
         SnakeGame.changeToPassState();
     }
     public static isPlaying(): boolean {
-        return Timer.isExecuting();
+        return this.timer.isExecuting();
     }
 
 
@@ -100,16 +116,16 @@ export default class SnakeGame{
 
     private static generateCandy(): void {
         let intId = Candy.getNextId();
-        let positionGenerative = classMap.getRandomPositionContainingNullBlock();
+        let positionGenerative = Maps.getRandomPositionContainingNullBlock();
         if (positionGenerative === null) return;
         let candy = new Candy(intId, positionGenerative);
 
         SnakeGame.mapCandys.set(intId, new Candy(intId, positionGenerative));
 
-        classMap.getBlock(positionGenerative).setBlockObject(candy);
+        Maps.getBlock(positionGenerative).setBlockObject(candy);
     }
     private static clearCandy(candy: Candy): void {
-        classMap.getBlock(candy.getPositionGenerative()).clearBlockObject();
+        Maps.getBlock(candy.getPositionGenerative()).clearBlockObject();
         SnakeGame.mapCandys.delete(candy.getId());
     }
 
@@ -134,7 +150,7 @@ export default class SnakeGame{
                 break;
         }
 
-        if (!classMap.isSizeInRange(positionNext)) return null;
+        if (!Maps.isSizeInRange(positionNext)) return null;
 
         snake.positionNext = positionNext;
         return positionNext;
@@ -147,7 +163,7 @@ export default class SnakeGame{
     }
     private static clearSnakeByArray(array: Array<Position>): void {
         array.forEach(position => {
-            classMap.getBlock(position).clearBlockObject();
+            Maps.getBlock(position).clearBlockObject();
         })
     }
 
@@ -166,7 +182,7 @@ export default class SnakeGame{
         let intMinIndex: number = 0;
 
         arrSnakes.forEach((snake, index) => {
-            if (arrSnakes[intMinIndex].positionNext?.compareTo(snake.positionNext) === "more than") intMinIndex = index;
+            if (arrSnakes[intMinIndex].positionNext.compareTo(snake.positionNext) === "more than") intMinIndex = index;
         })
 
         return intMinIndex;
@@ -186,7 +202,6 @@ export default class SnakeGame{
         setAliveSnakes.forEach(snake => SnakeGame.goAheadSnake(snake))
     }
     private static isCollidedForHead(snake01: Snake, snake02: Snake): boolean {
-        if (snake01.positionNext === undefined) throw new LogicalError("SnakeGame- the positionNext of snake is undefined, so can't execute isCollidedForHead()");
         return snake01.positionNext.isEqual(snake02.positionNext);
     }
     private static getDifferenceSet(array: Array<any>, set: Set<any>): Array<any> {
@@ -196,10 +211,8 @@ export default class SnakeGame{
         return arrDifferenceSet;
     }
     private static goAheadSnake(snake: Snake): void {
-        if (snake.positionNext === undefined) throw new LogicalError("SnakeGame- the positionNext of snake is undefined, so can't execute goAheadSnake()");
-
         let positionNext: Position = snake.positionNext;
-        let blockObject: BlockObject = classMap.getBlock(positionNext.intX, positionNext.intY).getBlockObject();
+        let blockObject: BlockObject = Maps.getBlock(positionNext.intX, positionNext.intY).getBlockObject();
 
         if (blockObject.isSnake()) SnakeGame.clearSnakeByArray( (blockObject as Snake).collided(positionNext) )
         else if (blockObject.isCandy()) {
@@ -209,8 +222,8 @@ export default class SnakeGame{
         }
 
         let positionSnakeTail = snake.getPositionTail();
-        classMap.getBlock(positionNext.intX, positionNext.intY).setBlockObject(snake);
-        if (!snake.isAteCandy()) classMap.getBlock(positionSnakeTail.intX, positionSnakeTail.intY).clearBlockObject();
+        Maps.getBlock(positionNext.intX, positionNext.intY).setBlockObject(snake);
+        if (!snake.isAteCandy()) Maps.getBlock(positionSnakeTail.intX, positionSnakeTail.intY).clearBlockObject();
 
         snake.goAhead();
     }

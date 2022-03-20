@@ -1,4 +1,4 @@
-import LogicalError from './LogicalError';
+import LogicalError from '../error/LogicalError';
 
 
 export default class OddNumber extends Number{

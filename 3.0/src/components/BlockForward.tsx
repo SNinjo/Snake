@@ -1,14 +1,14 @@
 import { CSSProperties, useRef, useState, memo } from 'react';
-import classBlock from '../class/Block';
+import { Block } from '../class/Maps';
 
 
-let Block = (props: { intX: number, intY: number, strColor: string }) => {
-    const [intSquareSizeByPx, setSquareSizeByPx] = useState(classBlock.getSquareSizeByPx());
+let BlockForward = (props: { intX: number, intY: number, strColor: string }) => {
+    const [intSquareSizeByPx, setSquareSizeByPx] = useState(Block.getSquareSizeByPx());
 
     const isFirstRender = useRef(true);
     let updateSquareBlockSize = () => {
-        classBlock.setSquareBlockSize( document.getElementById("mainContainer") as HTMLInputElement );
-        setSquareSizeByPx(classBlock.getSquareSizeByPx());
+        Block.setSquareBlockSize( document.getElementById("mainContainer") as HTMLInputElement );
+        setSquareSizeByPx(Block.getSquareSizeByPx());
     }
     if (isFirstRender.current){
         window.addEventListener("load", () => updateSquareBlockSize());
@@ -41,4 +41,4 @@ let Block = (props: { intX: number, intY: number, strColor: string }) => {
         </div>
     );
 }
-export default memo(Block);
+export default memo(BlockForward);

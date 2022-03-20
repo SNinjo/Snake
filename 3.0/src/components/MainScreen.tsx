@@ -1,8 +1,7 @@
 import { useEffect, useState, useRef, memo, CSSProperties  } from 'react';
 
 import SnakeGame from '../class/SnakeGame';
-import Map from '../class/Map';
-import Position from '../class/dataStructure/Position';
+import { Maps, Position } from '../class/Maps';
 
 import RowBlock from './RowBlock';
 import Menu from './Menu';
@@ -18,7 +17,7 @@ let MainScreen = () => {
     }
     useEffect(() => focusOnMainScreen(), [focusDiv]);
     
-    const [arr2Color, setColor] = useState(Map.getColors());
+    const [arr2Color, setColor] = useState(Maps.getColors());
     const [strGameState, setGameState] = useState("ready"); // ready | play | pause | over | pass
     let changeGameState = (strNewGameState: string) => setGameState(strNewGameState);
 
@@ -26,10 +25,10 @@ let MainScreen = () => {
     if (isFirstRender.current) {
         SnakeGame.changeToOverState = () => setGameState("over");
         SnakeGame.changeToPassState = () => setGameState("pass");
-        Map.updateMainScreen = () => setColor(Map.getColors());
+        Maps.updateMainScreen = () => setColor(Maps.getColors());
 
         SnakeGame.addPlayerByDefault(new Position(0, 0), "right", "red");
-        SnakeGame.addPlayerByDefault(new Position((Map.getWidth() - 1), 0), "down", "blue");
+        SnakeGame.addPlayerByDefault(new Position((Maps.getWidth() - 1), 0), "down", "blue");
 
         SnakeGame.initialize();
     }
@@ -70,7 +69,7 @@ let MainScreen = () => {
 
     
     let arr2TagBlock = [];
-    for (let intRowNumber = 0; intRowNumber < Map.getHeight(); intRowNumber++){
+    for (let intRowNumber = 0; intRowNumber < Maps.getHeight(); intRowNumber++){
         arr2TagBlock.push(<RowBlock key={intRowNumber} intY={intRowNumber} rowColor={arr2Color[intRowNumber]}></RowBlock>);
     }
 

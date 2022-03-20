@@ -1,13 +1,13 @@
-import { CSSProperties, memo } from 'react';
-import Map from '../class/Map';
-import Block from './Block';
+import { memo } from 'react';
+import { Maps } from '../class/Maps';
+import Block from './BlockForward';
 
 
 let RowBlock = (props: { intY: number, rowColor: Array<string> }) => {
     let intRowNumber = props.intY;
 
     let arrTagBlockEachRow = [];
-    for (let intColumnNumber = 0; intColumnNumber < Map.getWidth(); intColumnNumber++){
+    for (let intColumnNumber = 0; intColumnNumber < Maps.getWidth(); intColumnNumber++){
       arrTagBlockEachRow.push(<Block key={intRowNumber + "_" + intColumnNumber} intX={intColumnNumber} intY={intRowNumber} strColor={props.rowColor[intColumnNumber]}></Block>);
     }
 

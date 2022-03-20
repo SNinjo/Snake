@@ -1,5 +1,6 @@
-import Position from "./dataStructure/Position";
 import BlockObject from "./interface/BlockObject";
+import { Position } from "./Maps";
+
 
 export default class Candy implements BlockObject {
     private static readonly strColor = "orange";

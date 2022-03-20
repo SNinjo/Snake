@@ -1,8 +1,64 @@
 import BlockObject from "./interface/BlockObject";
 import LinkedList from "./dataStructure/LinkedList";
-import Direction from "./dataStructure/Direction";
-import Position from "./dataStructure/Position";
-import LogicalError from "./LogicalError";
+import { Position } from "./Maps";
+
+import LogicalError from "./error/LogicalError";
+
+
+class Direction {
+    private static readonly mapNumberToString: Map<number, string> = new Map([
+        [0, "null"],
+        [0, "up"],
+        [1, "right"],
+        [2, "down"],
+        [3, "left"],
+    ])
+    private static readonly mapStringToNumber: Map<string, number> = new Map([
+        ["null", 0],
+        ["up", 0],
+        ["right", 1],
+        ["down", 2],
+        ["left", 3],
+    ])
+
+    private intDirection: number = 0;
+    private intLastDirection: number = -1;
+
+
+    constructor(strDirection: string){
+        this.intDirection = this.valueOf(strDirection);
+    }
+
+    private valueOf(strDirection: string): number {
+        let intDirection = Direction.mapStringToNumber.get(strDirection);
+        if (intDirection === undefined) throw new LogicalError("Direction- this direction is't exist (strDirection: " + strDirection + ")");
+        return intDirection;
+    }
+    private toString(intDirection: number): string {
+        let strDirection = Direction.mapNumberToString.get(intDirection);
+        if (strDirection === undefined) throw new LogicalError("Direction- this direction number is't exist (intDirection: " + intDirection + ")");
+        return strDirection;
+    }
+
+    public getDirection(): string {
+        return this.toString(this.intDirection);
+    }
+
+    public setDirection(strNewDirection: string): void {
+        let intNewDirection = this.valueOf(strNewDirection);
+        if (this.isOppositeDirection(intNewDirection, this.intLastDirection)) return;
+
+        this.intDirection = intNewDirection;
+    }
+    public updateLastDirection(): void {
+        this.intLastDirection = this.intDirection;
+    }
+    private isOppositeDirection(intDirection01: number, intDirection02: number): boolean {
+        return ((intDirection01 + 2) % 4) === intDirection02;
+    }
+}
+
+
 
 
 export default class Snake implements BlockObject{
@@ -12,7 +68,7 @@ export default class Snake implements BlockObject{
     private direction: Direction;
     private linPositionBodys: LinkedList<Position>;
     private readonly positionGenerative: Position;
-    public positionNext?: Position;
+    public positionNext: Position;
     private strColor: "red" | "yellow" | "blue" | "purple";
 
 
@@ -22,8 +78,7 @@ export default class Snake implements BlockObject{
         this.strInitialDirection = strDirection;
         this.linPositionBodys = new LinkedList(positionGenerative.clone());
         this.positionGenerative = positionGenerative;
-        /* With ES6 imports, the module evaluation order is arbitrary if there's a cycle in the import graph. This can also cause problems with other bundlers too. */
-        // this.positionNext = new Position(); // Cannot access 'Position' before initialization
+        this.positionNext = new Position();
         this.strColor = strColor;
     }
 
@@ -80,7 +135,6 @@ export default class Snake implements BlockObject{
     public goAhead(): void {
         this.direction.updateLastDirection();
 
-        if (this.positionNext === undefined) throw new LogicalError("Snake- the positionNext of snake is undefined, so can't execute goAhead()");
         this.linPositionBodys.addFromHead(this.positionNext);
 
         if (this.isAteCandy()) this.digestCandy();

@@ -1,5 +1,5 @@
 import abstractComparable from '../interface/abstractComparable';
-import LogicalError from '../LogicalError';
+import LogicalError from '../error/LogicalError';
 
 
 class Node<T>{
