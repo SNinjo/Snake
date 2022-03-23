@@ -2,7 +2,7 @@ import { CSSProperties, useRef, useState, memo } from 'react';
 import { Block } from '../class/Maps';
 
 
-let BlockForward = (props: { intX: number, intY: number, strColor: string }) => {
+let BlockFrontend = (props: { intX: number, intY: number, strColor: string }) => {
     const [intSquareSizeByPx, setSquareSizeByPx] = useState(Block.getSquareSizeByPx());
 
     const isFirstRender = useRef(true);
@@ -41,4 +41,4 @@ let BlockForward = (props: { intX: number, intY: number, strColor: string }) => 
         </div>
     );
 }
-export default memo(BlockForward);
+export default memo(BlockFrontend);

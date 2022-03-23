@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Maps } from '../class/Maps';
-import Block from './BlockForward';
+import Block from './BlockFrontend';
 
 
 let RowBlock = (props: { intY: number, rowColor: Array<string> }) => {

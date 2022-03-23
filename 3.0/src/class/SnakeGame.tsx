@@ -192,17 +192,25 @@ export default class SnakeGame{
         let setAliveSnakes: Set<Snake> = new Set(arrSnakes);
 
         for (let index = 0; index < (arrSnakes.length - 1); index++){
-            if (SnakeGame.isCollidedForHead(arrSnakes[index], arrSnakes[index + 1])){
-                setAliveSnakes.delete(arrSnakes[index]);
-                setAliveSnakes.delete(arrSnakes[index + 1]);
+            if (SnakeGame.isCollidedHeadOfSnake(arrSnakes[index], arrSnakes[index + 1])){
+                SnakeGame.collideHeadOfSnake(arrSnakes[index], arrSnakes[index + 1]).forEach(snake => {
+                    setAliveSnakes.delete(snake);
+                });
             }
         }
         SnakeGame.getDifferenceSet(arrSnakes, setAliveSnakes).forEach(snake => SnakeGame.clearSnake(snake));
 
         setAliveSnakes.forEach(snake => SnakeGame.goAheadSnake(snake))
     }
-    private static isCollidedForHead(snake01: Snake, snake02: Snake): boolean {
+    private static isCollidedHeadOfSnake(snake01: Snake, snake02: Snake): boolean {
         return snake01.positionNext.isEqual(snake02.positionNext);
+    }
+    private static collideHeadOfSnake(snake01: Snake, snake02: Snake): Array<Snake> {
+        if (snake01.getLength() === snake02.getLength()){
+            return [snake01, snake02];
+        }
+        else if (snake01.getLength() > snake02.getLength()) return [snake02];
+        else return [snake01];
     }
     private static getDifferenceSet(array: Array<any>, set: Set<any>): Array<any> {
         let arrDifferenceSet: Array<any> = array.filter((element)=>{
