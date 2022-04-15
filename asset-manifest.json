@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "https://snake.sninjo.com/static/css/main.ab6b543a.css",
+    "main.js": "https://snake.sninjo.com/static/js/main.89801682.js",
+    "index.html": "https://snake.sninjo.com/index.html",
+    "main.ab6b543a.css.map": "https://snake.sninjo.com/static/css/main.ab6b543a.css.map",
+    "main.89801682.js.map": "https://snake.sninjo.com/static/js/main.89801682.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ab6b543a.css",
+    "static/js/main.89801682.js"
+  ]
+}
