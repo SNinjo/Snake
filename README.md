@@ -1,5 +1,5 @@
 # Snake
-### [DEMO](https://snake.sninjo.com)
+### [DEMO](https://snake.sninjo.com) &emsp; [Operating Manual](https://github.com/SNinjo/Snake/blob/main/3.0/README.md)
 This is a easy game, and we can step by step to learn how to design a wonderful program.  
 
 ## 1.0
