@@ -14,3 +14,23 @@
 
 ### step 5:
 &emsp;&emsp;open browser and input url> localhost:3000
+
+
+## Operating Manual
+
+### snake system
+&emsp;&emsp;exit: esc  
+&emsp;&emsp;pause: p/ space  
+&emsp;&emsp;restart: r  
+
+### red snake
+&emsp;&emsp;up: &ensp;↑  
+&emsp;&emsp;down: &ensp;↓  
+&emsp;&emsp;left: &ensp;←  
+&emsp;&emsp;right: &ensp;→  
+
+### blue snake
+&emsp;&emsp;up: &ensp;w  
+&emsp;&emsp;down: &ensp;s  
+&emsp;&emsp;left: &ensp;a  
+&emsp;&emsp;right: &ensp;d
