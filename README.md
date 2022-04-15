@@ -1,5 +1,6 @@
 # Snake
-This is a easy game, and we can step by step to learn how to design a wonderful program.
+This is a easy game, and we can step by step to learn how to design a wonderful program.  
+[DEMO](https://snake.sninjo.com)
 
 ## 1.0
 This version is single player version.  
