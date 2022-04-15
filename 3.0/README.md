@@ -7,10 +7,10 @@
 &emsp;&emsp;open command line and enter this file path
 
 ### step 3
-&emsp;&emsp;input: npm install
+&emsp;&emsp;input> npm install
 
 ### step 4
-&emsp;&emsp;input: npm start
+&emsp;&emsp;input> npm start
 
 ### step 5:
-&emsp;&emsp;open browser and input localhost:3000 (URL)
+&emsp;&emsp;open browser and input url> localhost:3000
