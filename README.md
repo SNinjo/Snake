@@ -15,3 +15,10 @@ Object Oriented Programming- Let us find the close variable and function to make
 This version is also multiplayer version.  
 We use React as the framework, and it include the software design pattern called MVC, actually the software design pattern of React is MVVM.  
 MVC- This is one way to clean up our program. It can help us to separate frontend (data display and GUI) and backend (logical data and function that defines how to process data), and the program is more maintainability.
+
+## Future Plan
+1. draw Sequence Diagram
+2. add automated testing  
+3. build the game server and develop online version  
+  
+stay tuned!
