@@ -1,4 +1,4 @@
-## Installation Steps
+## Installation
 
 ### step 1
 &emsp;&emsp;install node.js
