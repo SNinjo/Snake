@@ -14,8 +14,8 @@
 
 ### step 5:
 &emsp;&emsp;open browser and input url> localhost:3000
-
-
+  
+  
 ## Operating Manual
 
 ### snake system
@@ -34,3 +34,17 @@
 &emsp;&emsp;down: &ensp;s  
 &emsp;&emsp;left: &ensp;a  
 &emsp;&emsp;right: &ensp;d
+  
+  
+## UML
+all of UML is stored in /Snake/3.0/document/snake.drawio  
+You can open this file via [draw.io](https://draw.io/)
+
+### Activity Diagram
+![image](https://github.com/SNinjo/Snake/blob/main/3.0/img/ActivityDiagram.png)  
+
+### Component Diagram (Web Frontend Framework)
+![image](https://github.com/SNinjo/Snake/blob/main/3.0/img/ComponentDiagram.png)  
+
+### Class Diagram
+![image](https://github.com/SNinjo/Snake/blob/main/3.0/img/ClassDiagram.png)  
