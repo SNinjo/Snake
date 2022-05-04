@@ -1,7 +1,3 @@
-## DEMO
-![image](https://github.com/SNinjo/Snake/blob/main/3.0/img/snake.gif)
-
-
 ## Installation
 
 * step 1- install node.js
