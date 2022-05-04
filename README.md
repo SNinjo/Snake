@@ -1,6 +1,11 @@
 # Snake
-### [DEMO](https://snake.sninjo.com) &emsp; [Operating Manual](https://github.com/SNinjo/Snake/blob/main/3.0/README.md#operating-manual) &emsp; [UML](https://github.com/SNinjo/Snake/blob/main/3.0/README.md#uml)
-This is a easy game, and we can step by step to learn how to design a wonderful program.  
+### [Game Link](https://snake.sninjo.com) &emsp; [Operating Manual](https://github.com/SNinjo/Snake/blob/main/3.0/README.md#operating-manual) &emsp; [UML](https://github.com/SNinjo/Snake/blob/main/3.0/README.md#uml)
+This is a easy game, and we can step by step to learn how to design a wonderful program.
+
+## DEMO
+<div align="center">
+  <img src="https://github.com/SNinjo/Snake/blob/main/3.0/img/snake.gif" width="600" height="300"/>
+                                                                                                 </div>
 
 ## Version
 ### 1.0
