@@ -1,39 +1,34 @@
+## DEMO
+![image](https://github.com/SNinjo/Snake/blob/main/3.0/img/snake.gif)
+
+
 ## Installation
 
-### step 1
-&emsp;&emsp;install node.js
-
-### step 2
-&emsp;&emsp;open command line and enter this file path
-
-### step 3
-&emsp;&emsp;input> npm install
-
-### step 4
-&emsp;&emsp;input> npm start
-
-### step 5:
-&emsp;&emsp;open browser and input url> localhost:3000
+* step 1- install node.js
+* step 2- open command line and enter this file path
+* step 3- input> npm install
+* step 4- input> npm start
+* step 5:- open browser and input url> localhost:3000
   
   
 ## Operating Manual
 
 ### snake system
-&emsp;&emsp;exit: esc  
-&emsp;&emsp;pause: p/ space  
-&emsp;&emsp;restart: r  
+    exit: esc  
+    pause: p/ space  
+    restart: r  
 
 ### red snake
-&emsp;&emsp;up: &ensp;↑  
-&emsp;&emsp;down: &ensp;↓  
-&emsp;&emsp;left: &ensp;←  
-&emsp;&emsp;right: &ensp;→  
+    up: &ensp;↑  
+    down: &ensp;↓  
+    left: &ensp;←  
+    right: &ensp;→  
 
 ### blue snake
-&emsp;&emsp;up: &ensp;w  
-&emsp;&emsp;down: &ensp;s  
-&emsp;&emsp;left: &ensp;a  
-&emsp;&emsp;right: &ensp;d
+    up: &ensp;w  
+    down: &ensp;s  
+    left: &ensp;a  
+    right: &ensp;d
   
   
 ## UML
